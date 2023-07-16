@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'property_listing.css' %}" />
+{% endblock css %}
+
+
+{% block content %}
+
+<h1>My Property Listings !</h1>
+
+<div class="form-group">
+  {% for message in messages %}
+  <div class="alert alert-danger" role="alert">
+    {{message}}
+  </div>
+  {% endfor %}
+</div>
+
+
+<div class="properties-list">
+
+  {% for property in properties%}
+  <div class="property-card">
+    <h2>{{ property.name|default_if_none:"Not found" }}</h2>
+    <h4>{{ property.area|default_if_none:"Not found" }}, {{ property.city|default_if_none:"Not found" }}</h4>
+    <p>Property type : {{ property.property_type|default_if_none:"Not found" }}</p>
+    <p>BHK Type : {{ property.bhk_type|default_if_none:"Not found" }}</p>
+    <p>{{ property.description|linebreaks }}</p>
+    <p>Available from : {{ property.available_from|default_if_none:"Not found" }}</p>
+    <p>Owner Name : {{ property.owner_name|default_if_none:"Not found" }}</p>
+    <p>Contact : {{ property.ph_contact|default_if_none:"Not found" }}</p>
+    {% if property.is_approved %}
+    <span>
+      <em>Approved by {{property.approver|default_if_none:"Not found"}}</em>
+      <br>
+      <em>Approved on : {{ property.approved_date|default_if_none:"Not found" }}</em>
+    </span>
+    {% else %}
+    <p>Pending approval</p>
+    {% endif %}
+    <br>
+    <span>
+      <em>Published on : {{ property.publish_date|default_if_none:"Not found" }}</em>
+    </span>
+    <br>
+    <button id="delete-btn"><a href="{% url 'delete_my_listing' property.id %}">Delete</a></button>
+  </div>
+  {% empty %}
+  <span>
+    <p>No listed properties found !</p>
+    <br>
+    <a href="{% url 'upload_property' %}">List your property</a>
+  </span>
+
+  {% endfor %}
+
+
+</div>
+
+
+{% endblock content %}

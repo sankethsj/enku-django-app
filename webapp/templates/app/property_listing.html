@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'property_listing.css' %}" />
+{% endblock css %}
+
+
+
+{% block content %}
+
+<h1>Available properties !</h1>
+
+<div class="properties-list">
+
+    {% for property in properties%}
+    <div class="property-card">
+        <h2>{{ property.name|default_if_none:"Not found" }}</h2>
+        <h4>{{ property.area|default_if_none:"Not found" }}, {{ property.city|default_if_none:"Not found" }}</h4>
+        <p>Property type : {{ property.property_type|default_if_none:"Not found" }}</p>
+        <p>BHK Type : {{ property.bhk_type|default_if_none:"Not found" }}</p>
+        <p>{{ property.description|linebreaks }}</p>
+        <p>Available from : {{ property.available_from|default_if_none:"Not found" }}</p>
+        <p>Owner Name : {{ property.owner_name|default_if_none:"Not found" }}</p>
+        <p>Contact : {{ property.ph_contact|default_if_none:"Not found" }}</p>
+        <span>
+            <em>Published by : {{ property.publisher|default_if_none:"Not found" }}</em>
+            <br>
+            <em>Published on : {{ property.publish_date|default_if_none:"Not found" }}</em>
+        </span>
+        <br>
+        <span>
+            <em>Approved by {{property.approver|default_if_none:"Not found"}}</em>
+            <br>
+            <em>Approved on : {{ property.approved_date|default_if_none:"Not found" }}</em>
+        </span>
+    </div>
+    {% empty %}
+    <p>No property listings found !</p>
+
+    {% endfor %}
+
+</div>
+
+
+{% endblock content %}

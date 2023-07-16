@@ -1,0 +1,16 @@
+h1 {
+    text-align: center;
+}
+.properties-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.property-card {
+    max-width: 800px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+}
